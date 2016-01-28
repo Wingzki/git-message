@@ -6,7 +6,7 @@ require 'git/message/version'
 Gem::Specification.new do |spec|
   spec.name          = "git-message"
   spec.version       = Git::Message::VERSION
-  spec.authors       = ["thewingofthesky"]
+  spec.authors       = ["Wingzki"]
   spec.email         = ["thewingofthesky@gmail.com"]
 
   spec.summary       = %q{A plugin for git to creat a commit message}

@@ -1,8 +1,10 @@
-#!/usr/bin/env ruby
-
+require "git/message/version"
 require 'optparse'
 
-def showTypeOption
+module Git
+  module Message
+    
+  	def showTypeOption
     
 puts <<EOF
 
@@ -129,3 +131,6 @@ puts 'Commiting with message:' + commitMessage
 command = 'git commit -m ' + commitMessage
 
 system command
+    
+  end
+end
