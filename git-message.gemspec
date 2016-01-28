@@ -5,8 +5,7 @@ require 'version'
 
 Gem::Specification.new do |spec|
   spec.name          = "git-message"
-  spec.version       = Git::Mes
-  sage::VERSION
+  spec.version       = Git::Message::VERSION
   spec.authors       = ["Wingzki"]
   spec.email         = ["thewingofthesky@gmail.com"]
 
@@ -15,12 +14,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/Wingzki"
   spec.license       = "MIT"
 
-  # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
-  # delete this section to allow pushing this gem to any host.
-
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  # spec.files         =  ["lib/git-message.rb"]
+  spec.executables   << 'git-message' 
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.11"
