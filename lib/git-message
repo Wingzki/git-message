@@ -1,0 +1,131 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+def showTypeOption
+    
+puts <<EOF
+
+1 feat:    新功能（feature）
+2 fix:     修补bug
+3 docs:    文档（documentation）
+4 style:   格式（不影响代码运行的变动）
+5 refactor:重构（即不是新增功能，也不是修改bug的代码变动）
+6 test:    增加测试
+7 chore:   构建过程或辅助工具的变动
+8 debug:   调试的变更（仅作调试使用）
+
+Enter the type number of your commit:
+EOF
+
+end
+
+def showScopeNote
+    
+puts <<EOF
+
+Enter the scope of your commit:
+EOF
+
+end
+
+def showMessage
+    
+puts <<EOF
+
+Enter the subject of your commit:
+EOF
+
+end
+
+def getType (num)
+
+    case num
+    when '1'
+        "feat"
+    when '2'
+        "fix"
+    when '3'
+        "docs"
+    when '4'
+        "style"
+    when '5'
+       "refactor" 
+    when '6'
+        "test"
+    when '7'
+        "chore"
+    when '8'
+        "debug"
+    else
+        ''            
+    end
+
+end
+
+options = {}
+option_parser = OptionParser.new do |opts|
+  # 这里是这个命令行工具的帮助信息
+  opts.banner = 'here is help messages of git-message.'
+
+  # Option 作为switch，不带argument，用于将 switch 设置成 true 或 false
+  options[:switch] = false
+  # 下面第一项是 Short option（没有可以直接在引号间留空），第二项是 Long option，第三项是对 Option 的描述
+  opts.on('-v', '--version') do
+    # 这个部分就是使用这个Option后执行的代码
+    puts 'v0.1'
+    exit
+  end
+
+  # # Option 作为 flag，带argument，用于将argument作为数值解析，比如"name"信息
+  # #下面的“value”就是用户使用时输入的argument
+  # opts.on('-n NAME', '--name Name', 'Pass-in single name') do |value|
+  #   options[:name] = value
+  # end
+
+  # # Option 作为 flag，带一组用逗号分割的arguments，用于将arguments作为数组解析
+  # opts.on('-a A,B', '--array A,B', Array, 'List of arguments') do |value|
+  #   options[:array] = value
+  # end
+end.parse!
+
+showTypeOption
+
+while (1)
+
+   num = gets.chomp
+   options[:type] = getType num
+
+   break
+   
+end
+
+showScopeNote
+
+while (1)
+
+   scope = gets.chomp
+   options[:scope] = scope
+
+   break
+   
+end
+
+showMessage
+
+while (1)
+
+   subject = gets.chomp
+   options[:subject] = subject
+
+   break
+   
+end
+
+commitMessage = options[:type] + '[' + options[:scope] + ']' + ':' + options[:subject]
+
+puts 'Commiting with message:' + commitMessage
+
+command = 'git commit -m ' + commitMessage
+
+system command
