@@ -1,10 +1,8 @@
-require "git/message/version"
-require 'optparse'
+#!/usr/bin/env ruby
 
-module Git
-  module Message
+require 'optparse'
     
-  	def showTypeOption
+def showTypeOption
     
 puts <<EOF
 
@@ -75,7 +73,7 @@ option_parser = OptionParser.new do |opts|
   # 下面第一项是 Short option（没有可以直接在引号间留空），第二项是 Long option，第三项是对 Option 的描述
   opts.on('-v', '--version') do
     # 这个部分就是使用这个Option后执行的代码
-    puts 'v0.1'
+    puts 'v0.1.1'
     exit
   end
 
@@ -131,6 +129,3 @@ puts 'Commiting with message:' + commitMessage
 command = 'git commit -m ' + commitMessage
 
 system command
-    
-  end
-end
