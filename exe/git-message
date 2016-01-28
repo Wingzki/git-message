@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
+require 'git/message/version'
     
 def showTypeOption
     
@@ -73,7 +74,7 @@ option_parser = OptionParser.new do |opts|
   # 下面第一项是 Short option（没有可以直接在引号间留空），第二项是 Long option，第三项是对 Option 的描述
   opts.on('-v', '--version') do
     # 这个部分就是使用这个Option后执行的代码
-    puts 'v0.1.1'
+    puts Git::Message::VERSION
     exit
   end
 
