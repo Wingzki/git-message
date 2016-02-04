@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
+require 'colorize'
+
 require 'git/message/version'
 require 'git/message'
 
@@ -87,7 +89,9 @@ end
 
 commitMessage = options[:type] + '[' + options[:scope] + ']' + ':' + options[:subject]
 
-puts 'Commiting with message:' + commitMessage
+puts ""
+puts "Commiting with message:#{commitMessage}".green
+puts ""
 
 command = 'git commit -m ' + commitMessage
 
