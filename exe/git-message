@@ -8,27 +8,41 @@ require 'git/message'
 
 def getType (num)
 
-    case num
-    when '1'
-        "feat"
-    when '2'
-        "fix"
-    when '3'
-        "docs"
-    when '4'
-        "style"
-    when '5'
-        "refactor" 
-    when '6'
-        "test"
-    when '7'
-        "chore"
-    when '8'
-        "debug"
-    else
-        ''            
-    end
+  case num
+  when '1'
+    "feat"
+  when '2'
+    "fix"
+  when '3'
+    "docs"
+  when '4'
+    "style"
+  when '5'
+    "refactor" 
+  when '6'
+    "test"
+  when '7'
+    "chore"
+  when '8'
+    "debug"
+  else
+    ''            
+  end
 
+end
+
+def runCommend (options)
+
+  commitMessage = options[:type] + '[' + options[:scope] + ']' + ':' + options[:subject]
+
+  puts ""
+  puts "Commiting with message:#{commitMessage}".green
+  puts ""
+
+  command = 'git commit -m ' + commitMessage
+
+  system command
+  
 end
 
 options = {}
@@ -38,8 +52,23 @@ opts.banner = 'here is help messages of git-message.'
 
 # 下面第一项是 Short option（没有可以直接在引号间留空），第二项是 Long option，第三项是对 Option 的描述
 opts.on('-v', '--version', 'version of git-message') do
-    puts Git::Message::VERSION
-    exit
+  puts Git::Message::VERSION
+  exit
+end
+
+opts.on('-t TYPE', '--type TYPE', 'Type of commit message') do |value|
+  options[:type] = value
+  exit
+end
+
+opts.on('-s SCOPE', '--scope SCOPE', 'Scope of commit message') do |value|
+  options[:scope] = value
+  exit
+end
+
+opts.on('-m MESSAGE', '--message MESSAGE', 'Subject of commit message') do |value|
+  options[:subject] = value
+  exit
 end
 
   # # Option 作为 flag，带argument，用于将argument作为数值解析，比如"name"信息
@@ -53,6 +82,13 @@ end
   #   options[:array] = value
   # end
 end.parse!
+
+if options[:subject].length > 0
+
+  runCommend options
+  exit
+
+end
 
 Git::Message::showTypeOption
 
