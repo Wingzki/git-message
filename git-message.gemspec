@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Wingzki"]
   spec.email         = ["thewingofthesky@gmail.com"]
 
-  spec.summary       = %q{A plugin for git to creat a commit message}
-  spec.description   = %q{A plugin for git to creat a commit message}
+  spec.summary       = %q{A plugin of Git for creating a Angular style commit message}
+  spec.description   = %q{A plugin of Git for creating a Angular style commit message}
   spec.homepage      = "https://github.com/Wingzki"
   spec.license       = "MIT"
 
@@ -22,4 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.11"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_dependency             "colorize", "~> 0.7.7"
+  spec.add_dependency             "commander", "4.4.0"
 end
