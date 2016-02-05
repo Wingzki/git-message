@@ -33,7 +33,7 @@ end
 
 def runCommend (options)
 
-  commitMessage = options[:type] + '[' + options[:scope] + ']' + ':' + options[:subject]
+  commitMessage = "#{options[:type]}[#{options[:scope]}]:#{options[:subject]}".strip
 
   puts ""
   puts "Commiting with message:#{commitMessage}".green
@@ -58,17 +58,14 @@ end
 
 opts.on('-t TYPE', '--type TYPE', 'Type of commit message') do |value|
   options[:type] = value
-  exit
 end
 
 opts.on('-s SCOPE', '--scope SCOPE', 'Scope of commit message') do |value|
   options[:scope] = value
-  exit
 end
 
 opts.on('-m MESSAGE', '--message MESSAGE', 'Subject of commit message') do |value|
   options[:subject] = value
-  exit
 end
 
   # # Option 作为 flag，带argument，用于将argument作为数值解析，比如"name"信息
@@ -83,52 +80,53 @@ end
   # end
 end.parse!
 
-if options[:subject].length > 0
+tempType    = String.new("#{options[:type]}")
+tempScope   = String.new("#{options[:scope]}")
+tempSubject = String.new("#{options[:subject]}")
 
-  runCommend options
-  exit
+if tempType.length == 0
 
-end
+  Git::Message::showTypeOption
 
-Git::Message::showTypeOption
-
-while (1)
+  while (1)
 
    num = gets.chomp
    options[:type] = getType num
 
    break
 
+ end
+
 end
 
-Git::Message::showScopeNote
+if tempScope.length == 0
 
-while (1)
+  Git::Message::showScopeNote
+
+  while (1)
 
    scope = gets.chomp
    options[:scope] = scope
 
    break
 
+ end
+
 end
 
-Git::Message::showMessage
+if tempSubject.length == 0
 
-while (1)
+  Git::Message::showMessage
+
+  while (1)
 
    subject = gets.chomp
    options[:subject] = subject
 
    break
 
+ end
+
 end
 
-commitMessage = options[:type] + '[' + options[:scope] + ']' + ':' + options[:subject]
-
-puts ""
-puts "Commiting with message:#{commitMessage}".green
-puts ""
-
-command = 'git commit -m ' + commitMessage
-
-system command
+runCommend options

@@ -1,5 +1,5 @@
 module Git
   module Message
-    VERSION = "0.1.6"
+    VERSION = "0.2"
   end
 end
