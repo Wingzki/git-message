@@ -1,6 +1,6 @@
 # Git::Message
 
-git-message is a tool that help you to creat a Angular style commit message.
+git-message is A plugin of Git for creating a Angular style commit message.
 
 ## Installation
 

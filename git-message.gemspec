@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Wingzki"]
   spec.email         = ["thewingofthesky@gmail.com"]
 
-  spec.summary       = %q{A plugin for git to creat a commit message}
-  spec.description   = %q{A plugin for git to creat a commit message}
+  spec.summary       = %q{A plugin of Git for creating a Angular style commit message}
+  spec.description   = %q{A plugin of Git for creating a Angular style commit message}
   spec.homepage      = "https://github.com/Wingzki"
   spec.license       = "MIT"
 
