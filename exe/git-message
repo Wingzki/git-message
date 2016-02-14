@@ -26,7 +26,7 @@ def getType (num)
   when '8'
     "debug"
   else
-    ''            
+    num            
   end
 
 end
@@ -57,7 +57,7 @@ opts.on('-v', '--version', 'version of git-message') do
 end
 
 opts.on('-t TYPE', '--type TYPE', 'Type of commit message') do |value|
-  options[:type] = value
+  options[:type] = getType value
 end
 
 opts.on('-s SCOPE', '--scope SCOPE', 'Scope of commit message') do |value|
