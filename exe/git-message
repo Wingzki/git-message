@@ -2,13 +2,14 @@
 
 require 'optparse'
 require 'colorize'
+require 'commander/import'
 
 require 'git/message/version'
 require 'git/message'
 
-def getType (num)
+def getType (type)
 
-  case num
+  case type
   when '1'
     "feat"
   when '2'
@@ -26,107 +27,62 @@ def getType (num)
   when '8'
     "debug"
   else
-    num            
+    type            
   end
 
 end
 
-def runCommend (options)
+never_trace!
+default_command :commit
 
-  commitMessage = "#{options[:type]}[#{options[:scope]}]:#{options[:subject]}".strip
+program :name, 'git-message'
+program :version, Git::Message::VERSION
+program :description, 'A plugin of Git for creating a Angular style commit message.'
 
-  puts ""
-  puts "Commiting with message:#{commitMessage}".green
-  puts ""
+command :commit do |c|
 
-  command = 'git commit -m ' + commitMessage
+  c.description = "Commit with Angular style commit message"
 
-  system command
-  
-end
+  c.example "git message --type 1 --scope hello.rb --message world", ""
 
-options = {}
-option_parser = OptionParser.new do |opts|
-# 这里是这个命令行工具的帮助信息
-opts.banner = 'here is help messages of git-message.'
+  c.option '-t', '--type STRING', String, 'Type of commit message'
+  c.option '-s', '--scope STRING', String, 'Scope of commit message'
+  c.option '-m', '--message STRING', String, 'Subject of commit message'
 
-# 下面第一项是 Short option（没有可以直接在引号间留空），第二项是 Long option，第三项是对 Option 的描述
-opts.on('-v', '--version', 'version of git-message') do
-  puts Git::Message::VERSION
-  exit
-end
+  c.action do |args, options|
 
-opts.on('-t TYPE', '--type TYPE', 'Type of commit message') do |value|
-  options[:type] = getType value
-end
+    tempType    = getType options.type
+    tempScope   = options.scope
+    tempSubject = options.message
 
-opts.on('-s SCOPE', '--scope SCOPE', 'Scope of commit message') do |value|
-  options[:scope] = value
-end
+    if !tempType
 
-opts.on('-m MESSAGE', '--message MESSAGE', 'Subject of commit message') do |value|
-  options[:subject] = value
-end
+      tempType = choose("Type of your commit?", :feat, :fix, :docs, :style, :refactor, :test, :chore, :debug)
 
-  # # Option 作为 flag，带argument，用于将argument作为数值解析，比如"name"信息
-  # #下面的“value”就是用户使用时输入的argument
-  # opts.on('-n NAME', '--name Name', 'Pass-in single name') do |value|
-  #   options[:name] = value
-  # end
+    end
 
-  # # Option 作为 flag，带一组用逗号分割的arguments，用于将arguments作为数组解析
-  # opts.on('-a A,B', '--array A,B', Array, 'List of arguments') do |value|
-  #   options[:array] = value
-  # end
-end.parse!
+    if !tempScope
 
-tempType    = String.new("#{options[:type]}")
-tempScope   = String.new("#{options[:scope]}")
-tempSubject = String.new("#{options[:subject]}")
+      tempScope = ask("Scope of your commit: ")
 
-if tempType.length == 0
+    end
 
-  Git::Message::showTypeOption
+    if !tempSubject
 
-  while (1)
+      tempSubject = ask("Subject of your commit: ")
 
-   num = gets.chomp
-   options[:type] = getType num
+    end
 
-   break
+    commitMessage = "#{tempType}[#{tempScope}]:#{tempSubject}".strip
 
- end
+    puts ""
+    puts "Commiting with message:#{commitMessage}".green
+    puts ""
+
+    command = 'git commit -m ' + commitMessage
+
+    system command
+
+  end
 
 end
-
-if tempScope.length == 0
-
-  Git::Message::showScopeNote
-
-  while (1)
-
-   scope = gets.chomp
-   options[:scope] = scope
-
-   break
-
- end
-
-end
-
-if tempSubject.length == 0
-
-  Git::Message::showMessage
-
-  while (1)
-
-   subject = gets.chomp
-   options[:subject] = subject
-
-   break
-
- end
-
-end
-
-runCommend options
