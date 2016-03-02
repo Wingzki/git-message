@@ -73,7 +73,7 @@ command :commit do |c|
 
     end
 
-    commitMessage = "#{tempType}[#{tempScope}]:#{tempSubject}".strip
+    commitMessage = "\"#{tempType}[#{tempScope}]:#{tempSubject}\""
 
     puts ""
     puts "Commiting with message:#{commitMessage}".green
