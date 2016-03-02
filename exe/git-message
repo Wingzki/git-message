@@ -32,28 +32,18 @@ def getType (type)
 
 end
 
-def runCommend (options)
-
-  commitMessage = "#{options[:type]}[#{options[:scope]}]:#{options[:subject]}".strip
-
-  puts ""
-  puts "Commiting with message:#{commitMessage}".green
-  puts ""
-
-  command = 'git commit -m ' + commitMessage
-
-  system command
-  
-end
-
 never_trace!
-default_command :creat
+default_command :commit
 
 program :name, 'git-message'
 program :version, Git::Message::VERSION
 program :description, 'A plugin of Git for creating a Angular style commit message.'
 
-command :creat do |c|
+command :commit do |c|
+
+  c.description = "Commit with Angular style commit message"
+
+  c.example "git message --type 1 --scope hello.rb --message world", ""
 
   c.option '-t', '--type STRING', String, 'Type of commit message'
   c.option '-s', '--scope STRING', String, 'Scope of commit message'
@@ -61,37 +51,37 @@ command :creat do |c|
 
   c.action do |args, options|
 
-    data = {}
-    data[:type]    = getType options.type
-    data[:scope]   = options.scope
-    data[:subject] = options.message
+    tempType    = getType options.type
+    tempScope   = options.scope
+    tempSubject = options.message
 
-    tempType    = String.new("#{data[:type]}")
-    tempScope   = String.new("#{data[:scope]}")
-    tempSubject = String.new("#{data[:subject]}")
+    if !tempType
 
-    if tempType.length == 0
-
-      type = choose("Type of your commit?", :feat, :fix, :docs, :style, :refactor, :test, :chore, :debug)
-      data[:type] = type
+      tempType = choose("Type of your commit?", :feat, :fix, :docs, :style, :refactor, :test, :chore, :debug)
 
     end
 
-    if tempScope.length == 0
+    if !tempScope
 
-      scope = ask("Scope of your commit: ")
-      data[:scope] = scope
-
-    end
-
-    if tempSubject.length == 0
-
-      subject = ask("Subject of your commit: ")
-      data[:subject] = subject
+      tempScope = ask("Scope of your commit: ")
 
     end
 
-    runCommend data
+    if !tempSubject
+
+      tempSubject = ask("Subject of your commit: ")
+
+    end
+
+    commitMessage = "#{tempType}[#{tempScope}]:#{tempSubject}".strip
+
+    puts ""
+    puts "Commiting with message:#{commitMessage}".green
+    puts ""
+
+    command = 'git commit -m ' + commitMessage
+
+    system command
 
   end
 

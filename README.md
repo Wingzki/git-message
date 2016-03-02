@@ -20,13 +20,32 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+###Angular style commit message
 
-## Development
+type[scope]:subject
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+###Type
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+1. feat
+2. fix
+3. docs
+4. style
+5. refactor
+6. test
+7. chore
+8. debug
+
+```command line
+git message --type 1 --scope hello.rb --message world
+```
+
+or just use
+
+```command line
+git message
+```
+
+and then follow the note to enter the type,scope and subject 
 
 ## Contributing
 
