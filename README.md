@@ -35,13 +35,13 @@ type[scope]:subject
 7. chore
 8. debug
 
-```command line
+```
 git message --type 1 --scope hello.rb --message world
 ```
 
 or just use
 
-```command line
+```
 git message
 ```
 
